@@ -1,4 +1,3 @@
-```markdown
 # 🐙 SubOcto
 
 <p align="center">
@@ -98,4 +97,3 @@ Please add the domain > example.com
 
 <p align="center">Made with ❤️ by <b>Sec3nthu</b></p>
 <p align="center">⭐ Star this repo if you find it useful!</p>
-```
