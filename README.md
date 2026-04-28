@@ -3,7 +3,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python">
   <img src="https://img.shields.io/badge/Platform-Linux-orange?style=for-the-badge&logo=linux">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/Made%20by-Sec3nthu-red?style=for-the-badge">
 </p>
 
