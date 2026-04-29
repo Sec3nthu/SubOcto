@@ -1,5 +1,3 @@
-Here's a clean, professional, and ready-to-use `README.md` tailored for your script:
-
 # 🔍 Automated Subdomain Enumeration & Reconnaissance Toolkit
 
 > 🛡️ A powerful, phased reconnaissance orchestrator that automates subdomain discovery, resolution, live host probing, port scanning, vhost enumeration, crawling, JS extraction, screenshotting, and vulnerability scanning.
