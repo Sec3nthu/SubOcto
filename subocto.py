@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import subprocess
 import os
+import sys
+import argparse  # ← Added for argument parsing
 
 banner = r'''
  ██████  █    ██  ▄▄▄▄    ▒█████   ▄████▄  ▄▄▄█████▓ ▒█████  
@@ -20,7 +22,36 @@ _______________________________________________________________
 '''
 
 print(banner)
-domain = input("Please add the domain > ")
+
+# ===== Argument Parser Setup =====
+parser = argparse.ArgumentParser(
+    description="Automated Subdomain Enumeration & Reconnaissance Toolkit",
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    epilog="""
+Examples:
+  python %(prog)s -u example.com -sl subs.txt -rl resolvers.txt -ip 93.184.216.34
+  python %(prog)s --domain example.com --subdomain-list wordlist.txt --resolvers-list dns.txt --target-ip 1.2.3.4
+
+Use -h or --help for this help message.
+    """
+)
+
+parser.add_argument('-u', '--domain', required=True, help='Target domain (e.g., example.com)')
+parser.add_argument('-sl', '--subdomain-list', required=True, dest='subdomain_list',
+                    help='Path to subdomain wordlist for fuzzing')
+parser.add_argument('-rl', '--resolvers-list', required=True, dest='resolvers_list',
+                    help='Path to DNS resolvers list')
+parser.add_argument('-ip', '--target-ip', required=True, dest='target_ip',
+                    help='IP address of the target website (for vhost enumeration)')
+
+args = parser.parse_args()
+
+# ===== Assign parsed values to your existing variable names =====
+domain = args.domain
+domain_ip = args.target_ip
+subdoms_fuzzing = args.subdomain_list
+resolvers_fuzzing = args.resolvers_list
+
 file_name = f"{domain}_subs.txt"
 resolved_file = f"{domain}_resolved.txt"
 live_file = f"{domain}_live.txt"
@@ -290,29 +321,13 @@ def gau_scan(domain, file_name):
 def fuzzing(domain, file_name):
     print(f"\n[*] Fuzzing Subdomains with ffuf & shuffledns tools...")
 
-    # Wordlist input with validation
-    while True:
-        wordlist = input("Please add the wordlist > ").strip()
-        if os.path.isfile(wordlist):
-            break
-        else:
-            print("[-] Wordlist path is not valid, please try again.")
-
-    # Resolvers input with validation
-    while True:
-        resolvers = input("Please add the resolvers file > ").strip()
-        if os.path.isfile(resolvers):
-            break
-        else:
-            print("[-] Resolvers path is not valid, please try again.")
-
     # ffuf scan
     print(f"\n[*] Running ffuf for {domain}...")
     result = subprocess.run(
         [
             "ffuf",
             "-u", f"https://FUZZ.{domain}",
-            "-w", wordlist,
+            "-w", subdoms_fuzzing,
             "-mc", "200,301,302,403",
             "-rate", "10",
             "-t", "5",
@@ -337,8 +352,8 @@ def fuzzing(domain, file_name):
             [
                 "shuffledns",
                 "-d", domain,
-                "-w", wordlist,
-                "-r", resolvers,
+                "-w", subdoms_fuzzing,
+                "-r", resolvers_fuzzing,
                 "-silent"
             ],
             capture_output=True,
@@ -496,22 +511,13 @@ def naabu_scan(input_file, output_file):
 def vhost_enum(domain, input_file, output_file):
     print(f"\n[*] Running Virtual Host Enumeration...")
 
-    while True:
-        wordlist = input("Please add the vhost wordlist > ").strip()
-        if os.path.isfile(wordlist):
-            break
-        else:
-            print("[-] Wordlist path is not valid, please try again.")
-
-    ip = input("Please add the target IP > ").strip()
-
     try:
         result = subprocess.run(
             [
                 "ffuf",
-                "-u", f"http://{ip}",
+                "-u", f"http://{domain_ip}",
                 "-H", f"Host: FUZZ.{domain}",
-                "-w", wordlist,
+                "-w", subdoms_fuzzing,
                 "-mc", "200,301,302,403",
                 "-fs", "0",
                 "-rate", "100",
