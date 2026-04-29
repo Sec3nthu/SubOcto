@@ -122,12 +122,6 @@ All outputs are automatically saved in the working directory, prefixed by your t
 
 ---
 
-## 🛡️ Disclaimer
-
-> This tool is intended for **authorized security research, bug bounty programs, and penetration testing** only. Always obtain explicit permission before scanning or probing any target. The author (`sec3thnu`) is not responsible for any misuse, legal consequences, or system disruptions caused by this script.
-
----
-
 <p align="center">
   <b>Created with ❤️ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
   <i>Automate. Enumerate. Secure.</i>
