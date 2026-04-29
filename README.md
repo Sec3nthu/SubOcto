@@ -1,11 +1,11 @@
 # 🔍 Automated Subdomain Enumeration & Reconnaissance Toolkit
 
-> 🛡️ A powerful, phased reconnaissance orchestrator that automates subdomain discovery, resolution, live host probing, port scanning, vhost enumeration, crawling, JS extraction, screenshotting, and vulnerability scanning.
+> 🛡️ A stealth-optimized, 11-phase reconnaissance orchestrator that automates subdomain discovery, DNS resolution, live host probing, port scanning, vhost enumeration, crawling, JS extraction, screenshotting, and vulnerability scanning.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/Go-1.20%2B-blue?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.20+">
-  <img src="https://img.shields.io/badge/Install-1%20Click-green?style=for-the-badge&logo=linux&logoColor=white" alt="1-Click Install">
+  <img src="https://img.shields.io/badge/Mode-Stealth-green?style=for-the-badge&logo=shield&logoColor=white" alt="Stealth Mode">
   <img src="https://img.shields.io/badge/Author-sec3thnu-purple?style=for-the-badge" alt="Author">
 </p>
 
@@ -13,7 +13,7 @@
 
 ## 📖 Overview
 
-This script automates the entire subdomain reconnaissance workflow by chaining together **15+ industry-standard tools** and **web APIs**. It runs in a structured, phased approach to ensure comprehensive coverage while minimizing manual intervention. Perfect for bug bounty hunters, penetration testers, and security researchers.
+This script chains **15+ industry-standard tools** and web APIs into a structured, automated workflow. Built with **evasion and politeness** in mind, it features built-in rate limiting, request jitter, retry logic, thread capping, and customizable User-Agents to minimize WAF/IDS triggers while maintaining thorough coverage. Ideal for bug bounty hunters, penetration testers, and security researchers.
 
 ---
 
@@ -21,79 +21,103 @@ This script automates the entire subdomain reconnaissance workflow by chaining t
 
 | Phase | Capability |
 |-------|------------|
-| 🌐 **Passive Enumeration** | Scrapes `subdomainfinder.c99.nl` & `shrewdeye.app`, runs `subfinder`, `assetfinder`, `amass`, `findomain`, `gau` |
-| 💥 **Active Fuzzing** | Bruteforces subdomains using `ffuf` & `shuffledns` with custom wordlists & resolvers |
-| 🧹 **Cleanup** | Automatic deduplication & sorting of collected subdomains |
-| 📡 **DNS Resolution** | Validates subdomains using `dnsx` |
-| 🌍 **HTTP Probing** | Detects live web servers with `httpx` (status codes, titles, tech detection) |
-| 🔐 **TLS Enrichment** | Extracts SAN/CN subdomains from certificates using `tlsx` |
-| 🔌 **Port Scanning** | Fast top-1000 port scanning with `naabu` |
-| 🏢 **VHost Enumeration** | Virtual host discovery using `ffuf` against target IP |
-| 🕷️ **Crawling & JS** | Deep crawling with `katana` + JavaScript file extraction via `getJS` |
-| 📸 **Screenshots** | Automated visual capture of live hosts using `gowitness` |
-| 🛡️ **Vulnerability Scanning** | Runs `nuclei` with low/medium/high/critical severity templates |
+| 🌐 **Passive Enumeration** | `subdomainfinder.c99.nl`, `shrewdeye.app`, `subfinder`, `assetfinder`, `amass`, `findomain`, `gau` |
+| 💥 **Active Fuzzing** | `ffuf` & `shuffledns` with customizable rate/thread limits |
+| 🧹 **Deduplication** | Automatic cleanup & sorting of collected subdomains |
+| 📡 **DNS Resolution** | `dnsx` validates active subdomains |
+| 🌍 **HTTP Probing** | `httpx` detects live hosts, status codes, titles & tech stacks |
+| 🔐 **TLS Enrichment** | `tlsx` extracts SAN/CN subdomains from certificates |
+| 🔌 **Port Scanning** | `naabu` fast top-500 port scanning (configurable) |
+| 🏢 **VHost Enumeration** | `ffuf` virtual host discovery against target IP |
+| 🕷️ **Crawling & JS** | `katana` deep crawling + `getJS` JavaScript extraction |
+| 📸 **Screenshots** | `gowitness` automated visual capture of live hosts |
+| 🛡️ **Vulnerability Scanning** | `nuclei` scans for medium/high/critical issues |
 
 ---
 
-## 🚀 Installation (One Command)
+## 🚀 Installation
 
-### ✅ Step 1: Clone the Repository
+### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/sec3thnu/your-repo-name.git
 cd your-repo-name
 ```
 
-### ✅ Step 2: Run the Installer
+### 2️⃣ Run the Auto-Installer
 ```bash
 chmod +x install.sh && ./install.sh
 ```
 
-### ✅ Step 3: Add Go to PATH (One-Time Setup)
-After the installer finishes, run:
+### 3️⃣ Add Go Binaries to PATH
 ```bash
 echo 'export PATH="$PATH:$HOME/go/bin"' >> ~/.bashrc && source ~/.bashrc
 ```
 
-> 🎉 That's it! All Python dependencies and 12+ Go-based security tools are now installed and ready.
+✅ **Done!** All Python dependencies and 12+ Go-based security tools are installed and ready.
 
 ---
 
-## 🚀 Usage
+## 📋 Usage
 
 ### 🔹 Basic Syntax
 ```bash
-python recon.py -u <domain> -sl <subdomain_wordlist> -rl <resolvers_list> -ip <target_ip>
+python recon.py -u <domain> -sl <wordlist> -rl <resolvers> -ip <target_ip> [stealth_flags]
 ```
 
 ### 🔹 Flags
-| Flag | Long Form | Required | Description |
-|------|-----------|----------|-------------|
-| `-u` | `--domain` | ✅ | Target domain (e.g., `example.com`) |
-| `-sl` | `--subdomain-list` | ✅ | Path to subdomain fuzzing wordlist |
-| `-rl` | `--resolvers-list` | ✅ | Path to DNS resolvers file |
-| `-ip` | `--target-ip` | ✅ | IP address of the target (for VHost enum) |
-| `-h` | `--help` | ❌ | Show help message & exit |
+| Flag | Long Form | Required | Default | Description |
+|------|-----------|----------|---------|-------------|
+| `-u` | `--domain` | ✅ | - | Target domain (e.g., `example.com`) |
+| `-sl` | `--subdomain-list` | ✅ | - | Path to subdomain fuzzing wordlist |
+| `-rl` | `--resolvers-list` | ✅ | - | Path to DNS resolvers file |
+| `-ip` | `--target-ip` | ✅ | - | Target IP (for VHost enumeration) |
+| `-t` | `--threads` | ❌ | `5` | Max concurrent threads for external tools |
+| `-d` | `--delay` | ❌ | `1.5` | Base delay (seconds) between web requests |
+| `-r` | `--rate` | ❌ | `10` | Max requests/sec for fuzzing/scanning tools |
+| `--jitter` | - | ❌ | `✅` | Add random delay variation to avoid bot detection |
+| `--ua` | `--user-agent` | ❌ | Browser UA | Custom User-Agent string for HTTP requests |
 
 ### 🔹 Examples
 ```bash
-# Standard run
-python recon.py -u target.com -sl /opt/wordlists/subdomains.txt -rl /opt/wordlists/resolvers.txt -ip 93.184.216.34
+# Standard run (default stealth settings)
+python recon.py -u target.com -sl wordlists/subs.txt -rl wordlists/resolvers.txt -ip 93.184.216.34
 
-# View help
+# Ultra-stealth for heavily protected targets
+python recon.py -u target.com -sl subs.txt -rl resolvers.txt -ip 1.2.3.4 -t 2 -d 3.0 -r 5 --jitter --ua "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+
+# Show help
 python recon.py -h
 ```
 
 ---
 
+## 🛡️ Stealth Mode Guide
+
+Avoiding WAF/IPS blocks is critical for successful recon. Use these presets based on target sensitivity:
+
+| Preset | Command | Best For |
+|--------|---------|----------|
+| 🟢 **Default** | `-t 5 -d 1.5 -r 10` | Standard bug bounty targets |
+| 🟡 **Moderate** | `-t 3 -d 2.0 -r 8` | Targets with Cloudflare/AWS WAF |
+| 🔴 **Ultra** | `-t 2 -d 3.0 -r 5 --jitter` | Highly protected or rate-limited domains |
+
+### 💡 Pro Tips:
+- Always enable `--jitter` on production environments
+- Rotate `--ua` with real browser strings to bypass simple UA filters
+- Start conservative → monitor for `429` or `403` responses → increase speed gradually
+- Keep wordlists clean & deduplicated to avoid redundant requests
+
+---
+
 ## 📁 Output Structure
 
-All outputs are automatically saved in the working directory, prefixed by your target domain:
+All results are saved in the current working directory, prefixed by your target domain:
 
 | File/Directory | Purpose |
 |----------------|---------|
 | `{domain}_subs.txt` | All discovered subdomains (deduplicated) |
 | `{domain}_resolved.txt` | DNS-resolved subdomains with IPs |
-| `{domain}_live.txt` | Live HTTP/HTTPS hosts with status codes & tech |
+| `{domain}_live.txt` | Live HTTP/HTTPS hosts with status & tech |
 | `{domain}_ports.txt` | Open ports per host |
 | `{domain}_vhosts.txt` | Discovered virtual hosts |
 | `{domain}_jsfiles.txt` | Extracted JavaScript endpoints |
@@ -105,53 +129,17 @@ All outputs are automatically saved in the working directory, prefixed by your t
 
 ## ⚠️ Important Notes
 
-- 🕒 The `subdomainfinder.c99.nl` module requires manual date input (day/month/year) during runtime.
-- 📦 Ensure wordlists (`-sl`) and resolvers (`-rl`) are valid, readable files.
-- ⚡ Some tools (`ffuf`, `shuffledns`, `naabu`) may require elevated privileges or adjusted rate limits depending on your network.
-- 🌐 Internet connection required for all external API & tool calls.
-- 🐧 Tested on Linux/macOS. Windows users: Use WSL2 for best compatibility.
-
----
-
-## 🔧 What `install.sh` Does
-
-The installer handles everything in one go:
-
-```bash
-#!/bin/bash
-
-echo "[*] Installing Python requirements..."
-pip install requests beautifulsoup4
-
-echo "[*] Installing Go tools..."
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
-go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
-go install -v github.com/projectdiscovery/katana/cmd/katana@latest
-go install -v github.com/projectdiscovery/tlsx/cmd/tlsx@latest
-go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
-go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
-go install -v github.com/tomnomnom/assetfinder@latest
-go install -v github.com/lc/gau/v2/cmd/gau@latest
-go install -v github.com/sensepost/gowitness@latest
-go install -v github.com/ffuf/ffuf/v2@latest
-
-echo "[+] Done! All tools installed successfully"
-echo '[*] Add Go binaries to PATH:'
-echo '    echo export PATH="$PATH:$HOME/go/bin" >> ~/.bashrc'
-echo '    source ~/.bashrc'
-```
-
-✅ Installs Python deps via `pip`  
-✅ Installs 12+ Go-based recon tools via `go install`  
-✅ Prints final PATH setup instructions  
+- 🕒 `subdomainfinder.c99.nl` requires manual date input (day/month/year) during runtime
+- 📦 Ensure wordlists (`-sl`) and resolvers (`-rl`) exist and are readable
+- ⚡ Some tools may require elevated privileges (`sudo`) for raw socket scanning
+- 🌐 Internet connection required for all external API & tool calls
+- 🐧 Tested on Linux/macOS. Windows users: Use WSL2 for full compatibility
 
 ---
 
 <p align="center">
   <b>Created with ❤️ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
-  <i>Automate. Enumerate. Secure.</i>
+  <i>Automate. Enumerate. Stay Undetected.</i>
 </p>
 
 ---
