@@ -1,98 +1,142 @@
-# 🐙 SubOcto
+Here's a clean, professional, and ready-to-use `README.md` tailored for your script:
+
+# 🔍 Automated Subdomain Enumeration & Reconnaissance Toolkit
+
+> 🛡️ A powerful, phased reconnaissance orchestrator that automates subdomain discovery, resolution, live host probing, port scanning, vhost enumeration, crawling, JS extraction, screenshotting, and vulnerability scanning.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python">
-  <img src="https://img.shields.io/badge/Platform-Linux-orange?style=for-the-badge&logo=linux">
-  <img src="https://img.shields.io/badge/Made%20by-Sec3nthu-red?style=for-the-badge">
-</p>
-
-<p align="center">
-  <b>All-in-one Subdomain Enumeration & Reconnaissance Tool for Bug Bounty Hunters</b>
+  <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+">
+  <img src="https://img.shields.io/badge/CLI-argparse-green?style=for-the-badge&logo=gnometerminal&logoColor=white" alt="CLI">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status">
+  <img src="https://img.shields.io/badge/Author-sec3thnu-purple?style=for-the-badge" alt="Author">
 </p>
 
 ---
 
-## 🔥 What it does
+## 📖 Overview
 
-SubOcto automates your entire recon workflow in one script.  
-From passive subdomain discovery all the way to vulnerability scanning.
-
----
-
-## ⚡ Phases
-
-| Phase | Description | Tools |
-|-------|-------------|-------|
-| 1 | Passive Enumeration | subfinder, assetfinder, amass, findomain, gau, shrewdeye, subdomainfinder.c99.nl |
-| 2 | Active DNS Bruteforce | ffuf, shuffledns |
-| 3 | Cleanup & Deduplication | built-in |
-| 4 | DNS Resolution | dnsx |
-| 5 | HTTP Probing | httpx |
-| 6 | TLS Enrichment | tlsx |
-| 7 | Port Scanning | naabu |
-| 8 | Virtual Host Enumeration | ffuf |
-| 9 | Web Crawling & JS Discovery | katana, getJS |
-| 10 | Screenshots | gowitness |
-| 11 | Vulnerability Scanning | nuclei |
+This script automates the entire subdomain reconnaissance workflow by chaining together **15+ industry-standard tools** and **web APIs**. It runs in a structured, phased approach to ensure comprehensive coverage while minimizing manual intervention. Perfect for bug bounty hunters, penetration testers, and security researchers.
 
 ---
 
-## 📁 Output Files
+## ✨ Features
 
-| File | Content |
-|------|---------|
-| `domain_subs.txt` | All unique subdomains |
-| `domain_resolved.txt` | DNS resolved subdomains |
-| `domain_live.txt` | Live web servers |
-| `domain_ports.txt` | Open ports |
-| `domain_vhosts.txt` | Virtual hosts |
-| `domain_crawl.txt` | Crawled URLs |
-| `domain_jsfiles.txt` | JavaScript files |
-| `domain_screenshots/` | Website screenshots |
-| `domain_vulnerabilities.txt` | Found vulnerabilities |
+| Phase | Capability |
+|-------|------------|
+| 🌐 **Passive Enumeration** | Scrapes `subdomainfinder.c99.nl` & `shrewdeye.app`, runs `subfinder`, `assetfinder`, `amass`, `findomain`, `gau` |
+| 💥 **Active Fuzzing** | Bruteforces subdomains using `ffuf` & `shuffledns` with custom wordlists & resolvers |
+| 🧹 **Cleanup** | Automatic deduplication & sorting of collected subdomains |
+| 📡 **DNS Resolution** | Validates subdomains using `dnsx` |
+| 🌍 **HTTP Probing** | Detects live web servers with `httpx` (status codes, titles, tech detection) |
+| 🔐 **TLS Enrichment** | Extracts SAN/CN subdomains from certificates using `tlsx` |
+| 🔌 **Port Scanning** | Fast top-1000 port scanning with `naabu` |
+| 🏢 **VHost Enumeration** | Virtual host discovery using `ffuf` against target IP |
+| 🕷️ **Crawling & JS** | Deep crawling with `katana` + JavaScript file extraction via `getJS` |
+| 📸 **Screenshots** | Automated visual capture of live hosts using `gowitness` |
+| 🛡️ **Vulnerability Scanning** | Runs `nuclei` with low/medium/high/critical severity templates |
 
 ---
 
-## ⚙️ Installation
+## 📦 Prerequisites & Installation
 
+### 🔧 Python Dependencies
 ```bash
-# 1. Clone the repo
-git clone https://github.com/USERNAME/SubOcto.git
-cd SubOcto
-
-# 2. Install Python requirements
-pip install -r requirements.txt
-
-# 3. Install all Go tools
-chmod +x install.sh
-./install.sh
-
-# 4. Add Go binaries to PATH
-echo 'export PATH="$PATH:$HOME/go/bin"' >> ~/.bashrc
-source ~/.bashrc
+pip install requests beautifulsoup4
 ```
+
+### 🛠️ External Tools (Must be in `$PATH`)
+All tools are Go-based. Install them with:
+```bash
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install github.com/tomnomnom/assetfinder@latest
+go install -v github.com/owasp-amass/amass/v4/...@master
+go install -v github.com/Findomain/Findomain@latest
+go install github.com/lc/gau/v2/cmd/gau@latest
+go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest
+go install github.com/ffuf/ffuf/v2@latest
+go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+go install github.com/003random/getJS@latest
+go install github.com/sensepost/gowitness@latest
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+```
+
+> 💡 Ensure `~/go/bin` is in your `$PATH` so the script can locate the binaries.
 
 ---
 
 ## 🚀 Usage
 
+### 🔹 Basic Syntax
 ```bash
-python3 subocto.py
+python recon.py -u <domain> -sl <subdomain_wordlist> -rl <resolvers_list> -ip <target_ip>
 ```
 
-```
-Please add the domain > example.com
+### 🔹 Flags
+| Flag | Long Form | Required | Description |
+|------|-----------|----------|-------------|
+| `-u` | `--domain` | ✅ | Target domain (e.g., `example.com`) |
+| `-sl` | `--subdomain-list` | ✅ | Path to subdomain fuzzing wordlist |
+| `-rl` | `--resolvers-list` | ✅ | Path to DNS resolvers file |
+| `-ip` | `--target-ip` | ✅ | IP address of the target (for VHost enum) |
+| `-h` | `--help` | ❌ | Show help message & exit |
+
+### 🔹 Examples
+```bash
+# Standard run
+python recon.py -u target.com -sl /opt/wordlists/subdomains.txt -rl /opt/wordlists/resolvers.txt -ip 93.184.216.34
+
+# View help
+python recon.py -h
 ```
 
 ---
 
-## 📋 Requirements
+## 📁 Output Structure
 
-- Linux
-- Python 3.x
-- Go 1.21+
+All outputs are automatically saved in the working directory, prefixed by your target domain:
+
+| File/Directory | Purpose |
+|----------------|---------|
+| `{domain}_subs.txt` | All discovered subdomains (deduplicated) |
+| `{domain}_resolved.txt` | DNS-resolved subdomains with IPs |
+| `{domain}_live.txt` | Live HTTP/HTTPS hosts with status codes & tech |
+| `{domain}_ports.txt` | Open ports per host |
+| `{domain}_vhosts.txt` | Discovered virtual hosts |
+| `{domain}_jsfiles.txt` | Extracted JavaScript endpoints |
+| `{domain}_crawl.txt` | Crawled URLs & paths |
+| `{domain}_screenshots/` | PNG screenshots of live hosts |
+| `{domain}_vulnerabilities.txt` | Nuclei vulnerability findings |
 
 ---
 
-<p align="center">Made with ❤️ by <b>Sec3nthu</b></p>
-<p align="center">⭐ Star this repo if you find it useful!</p>
+## ⚠️ Important Notes
+
+- 🕒 The `subdomainfinder.c99.nl` module requires manual date input (day/month/year) during runtime.
+- 📦 Ensure wordlists (`-sl`) and resolvers (`-rl`) are valid, readable files.
+- ⚡ Some tools (`ffuf`, `shuffledns`, `naabu`) may require elevated privileges or adjusted rate limits depending on your network.
+- 🌐 Internet connection required for all external API & tool calls.
+
+---
+
+## 🛡️ Disclaimer
+
+> This tool is intended for **authorized security research, bug bounty programs, and penetration testing** only. Always obtain explicit permission before scanning or probing any target. The author (`sec3thnu`) is not responsible for any misuse, legal consequences, or system disruptions caused by this script.
+
+---
+
+<p align="center">
+  <b>Created with ❤️ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
+  <i>Automate. Enumerate. Secure.</i>
+</p>
+```
+
+### 📌 How to Use:
+1. Save it as `README.md` in the same directory as your script
+2. Replace `recon.py` in the examples with your actual script filename
+3. Commit to GitHub/GitLab and it will render beautifully
+
+Let me know if you want a dark-mode version, a shorter quickstart variant, or automated setup scripts (`setup.sh`, `requirements.txt`) added!
