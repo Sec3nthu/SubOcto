@@ -4,8 +4,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+">
-  <img src="https://img.shields.io/badge/CLI-argparse-green?style=for-the-badge&logo=gnometerminal&logoColor=white" alt="CLI">
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status">
+  <img src="https://img.shields.io/badge/Go-1.20%2B-blue?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.20+">
+  <img src="https://img.shields.io/badge/Install-1%20Click-green?style=for-the-badge&logo=linux&logoColor=white" alt="1-Click Install">
   <img src="https://img.shields.io/badge/Author-sec3thnu-purple?style=for-the-badge" alt="Author">
 </p>
 
@@ -35,34 +35,26 @@ This script automates the entire subdomain reconnaissance workflow by chaining t
 
 ---
 
-## 📦 Prerequisites & Installation
+## 🚀 Installation (One Command)
 
-### 🔧 Python Dependencies
+### ✅ Step 1: Clone the Repository
 ```bash
-pip install requests beautifulsoup4
+git clone https://github.com/sec3thnu/your-repo-name.git
+cd your-repo-name
 ```
 
-### 🛠️ External Tools (Must be in `$PATH`)
-All tools are Go-based. Install them with:
+### ✅ Step 2: Run the Installer
 ```bash
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install github.com/tomnomnom/assetfinder@latest
-go install -v github.com/owasp-amass/amass/v4/...@master
-go install -v github.com/Findomain/Findomain@latest
-go install github.com/lc/gau/v2/cmd/gau@latest
-go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest
-go install github.com/ffuf/ffuf/v2@latest
-go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
-go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
-go install github.com/projectdiscovery/katana/cmd/katana@latest
-go install github.com/003random/getJS@latest
-go install github.com/sensepost/gowitness@latest
-go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+chmod +x install.sh && ./install.sh
 ```
 
-> 💡 Ensure `~/go/bin` is in your `$PATH` so the script can locate the binaries.
+### ✅ Step 3: Add Go to PATH (One-Time Setup)
+After the installer finishes, run:
+```bash
+echo 'export PATH="$PATH:$HOME/go/bin"' >> ~/.bashrc && source ~/.bashrc
+```
+
+> 🎉 That's it! All Python dependencies and 12+ Go-based security tools are now installed and ready.
 
 ---
 
@@ -117,6 +109,43 @@ All outputs are automatically saved in the working directory, prefixed by your t
 - 📦 Ensure wordlists (`-sl`) and resolvers (`-rl`) are valid, readable files.
 - ⚡ Some tools (`ffuf`, `shuffledns`, `naabu`) may require elevated privileges or adjusted rate limits depending on your network.
 - 🌐 Internet connection required for all external API & tool calls.
+- 🐧 Tested on Linux/macOS. Windows users: Use WSL2 for best compatibility.
+
+---
+
+## 🔧 What `install.sh` Does
+
+The installer handles everything in one go:
+
+```bash
+#!/bin/bash
+
+echo "[*] Installing Python requirements..."
+pip install requests beautifulsoup4
+
+echo "[*] Installing Go tools..."
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+go install -v github.com/projectdiscovery/tlsx/cmd/tlsx@latest
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+go install -v github.com/tomnomnom/assetfinder@latest
+go install -v github.com/lc/gau/v2/cmd/gau@latest
+go install -v github.com/sensepost/gowitness@latest
+go install -v github.com/ffuf/ffuf/v2@latest
+
+echo "[+] Done! All tools installed successfully"
+echo '[*] Add Go binaries to PATH:'
+echo '    echo export PATH="$PATH:$HOME/go/bin" >> ~/.bashrc'
+echo '    source ~/.bashrc'
+```
+
+✅ Installs Python deps via `pip`  
+✅ Installs 12+ Go-based recon tools via `go install`  
+✅ Prints final PATH setup instructions  
 
 ---
 
@@ -125,3 +154,4 @@ All outputs are automatically saved in the working directory, prefixed by your t
   <i>Automate. Enumerate. Secure.</i>
 </p>
 ```
+---
