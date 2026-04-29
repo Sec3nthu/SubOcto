@@ -153,4 +153,5 @@ echo '    source ~/.bashrc'
   <b>Created with ❤️ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
   <i>Automate. Enumerate. Secure.</i>
 </p>
+
 ---
