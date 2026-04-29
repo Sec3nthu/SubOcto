@@ -1,4 +1,4 @@
-# 🔍 Automated Subdomain Enumeration & Reconnaissance Toolkit
+# 🔍 SubOcto
 
 > 🛡️ A stealth-optimized, 11-phase reconnaissance orchestrator that automates subdomain discovery, DNS resolution, live host probing, port scanning, vhost enumeration, crawling, JS extraction, screenshotting, and vulnerability scanning.
 
@@ -39,8 +39,8 @@ This script chains **15+ industry-standard tools** and web APIs into a structure
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/sec3thnu/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/sec3thnu/SubOcto.git
+cd SubOcto
 ```
 
 ### 2️⃣ Run the Auto-Installer
@@ -61,7 +61,7 @@ echo 'export PATH="$PATH:$HOME/go/bin"' >> ~/.bashrc && source ~/.bashrc
 
 ### 🔹 Basic Syntax
 ```bash
-python recon.py -u <domain> -sl <wordlist> -rl <resolvers> -ip <target_ip> [stealth_flags]
+python subocto.py -u <domain> -sl <wordlist> -rl <resolvers> -ip <target_ip> [stealth_flags]
 ```
 
 ### 🔹 Flags
@@ -80,13 +80,13 @@ python recon.py -u <domain> -sl <wordlist> -rl <resolvers> -ip <target_ip> [stea
 ### 🔹 Examples
 ```bash
 # Standard run (default stealth settings)
-python recon.py -u target.com -sl wordlists/subs.txt -rl wordlists/resolvers.txt -ip 93.184.216.34
+python subocto.py -u target.com -sl wordlists/subs.txt -rl wordlists/resolvers.txt -ip 93.184.216.34
 
 # Ultra-stealth for heavily protected targets
-python recon.py -u target.com -sl subs.txt -rl resolvers.txt -ip 1.2.3.4 -t 2 -d 3.0 -r 5 --jitter --ua "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+python subocto.py -u target.com -sl subs.txt -rl resolvers.txt -ip 1.2.3.4 -t 2 -d 3.0 -r 5 --jitter --ua "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
 
 # Show help
-python recon.py -h
+python subocto.py -h
 ```
 
 ---
@@ -138,7 +138,7 @@ All results are saved in the current working directory, prefixed by your target 
 ---
 
 <p align="center">
-  <b>Created with ❤️ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
+  <b>Created with ☕ by <a href="https://github.com/sec3thnu" target="_blank">sec3thnu</a></b><br>
   <i>Automate. Enumerate. Stay Undetected.</i>
 </p>
 
